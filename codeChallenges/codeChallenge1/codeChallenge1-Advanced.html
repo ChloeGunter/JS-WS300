@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Code Challenge #1 Advanced</title>
+	<style type="text/css">
+
+	#my-div{
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		top: 10px;
+		left: 10px;
+	}
+	</style>
+
+</head>
+<body>
+	<div id="my-div"></div>
+	<script type="text/javascript">
+	'use strict';
+		//alert('clicked');
+        const currentColor = genHex();
+        const currentColor2 = genHex();
+		let isCurrentColor1 = true;
+
+        let myDiv = document.querySelector('#my-div');
+        myDiv.style.backgroundColor = currentColor;
+
+	function changeColor(){
+
+        //console.log(myDiv);
+        if(isCurrentColor1){
+            myDiv.style.backgroundColor = currentColor2;
+            isCurrentColor1 = false;
+        }else{
+            myDiv.style.backgroundColor = currentColor;
+            isCurrentColor1 = true;
+        }
+
+
+	}
+
+    function getRandInt(min = 1, max = 100){
+        return Math.floor(Math.random() * (max - min + 1)) + min	
+    }
+
+    function genHex(){
+        let hexValues = '0123456789ABCDEF'; //hex characters
+        hexValues = hexValues.split(''); //creates array
+        //console.log(hexValues);
+
+    var hexColor = '#';
+
+    for (var i = 0; i<6; i++){
+    //run 6 times 0 - 5
+    var newVal = hexValues[getRandInt(0,15)]
+    hexColor += newVal; //adds newVal to current hexColor value.
+    console.log(hexColor);
+
+    }
+    return hexColor;
+
+    }
+
+	myDiv.addEventListener('click', changeColor);
+
+
+	
+	</script>
+    
+</body>
+</html>
