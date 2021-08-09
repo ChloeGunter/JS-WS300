@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Code Challenge 2 - Advanced</title>
+	<style type="text/css">
+		#my-div{
+			width: 50px;
+			height: 50px;
+			background-color: salmon;
+			position: absolute;
+			top: 20px;
+			left: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div id="my-div"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="scripts/jquery.transit.min.js"></script>
+<script type="text/javascript">
+
+const myDiv = $('#my-div');
+
+let color1 = 'salmon';
+let color2 = 'teal';
+let isSalmon = true; 
+
+    // function nextAnimation() {
+    //     colorSwitch();
+    //     myDiv.animate({left: '+=200'}, 700, 'linear');
+    // }
+
+
+
+	function animateDiv(){
+        myDiv.transition({left: '+=200', 'background-color': colorSwitch()}, 700);
+        myDiv.transition({top: '+=200'}, 700);
+        myDiv.transition({left: '-=200', 'background-color': colorSwitch()}, 700);
+        myDiv.transition({top: '-=200'}, 700, animateDiv);
+        }
+	animateDiv();
+
+    function colorSwitch(){
+	let theColor = '';
+
+	if(isSalmon){
+		theColor = color2;
+		isSalmon = false;	
+
+	}else{
+		theColor = color1;
+		isSalmon = true;	
+	}
+
+	return theColor;
+
+}
+
+
+
+</script>
+</body>
+</html>
