@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Andy Warhol Game</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana, Arial, Sans;
+		}
+		img{
+			float: left;
+			height: 100%;
+			width: 100%;
+			max-width: 200px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Find the Art Work</h1>
+	<div id="game-stage">
+
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	'use strict';
+
+	let artWorks = 9;
+	const totalWorks = 30;
+	let availableWorks = [];
+
+
+// create an array of avalible photos 1-30
+for(let i = 1; i <= 30; i += 1){
+
+	availableWorks.push(i);
+
+}
+
+// create an array to add 9 divs
+// randomly choose from the availableWorks array
+for(let i = 0; i < artWorks; i += 1){
+
+const randomPhotoNum = availableWorks.splice(getRandomInt(0, availableWorks.length-1), 1);
+
+console.log(getRandomInt(0, artWorks-1));
+
+const artImg = `<div class="art">
+				<img src="images/${randomPhotoNum}.jpg"/>
+				</div>`;
+
+$('#game-stage').append(artImg);
+
+}
+
+// random integer function
+function getRandomInt(min = 1, max = 100){
+		return Math.floor( Math.random() * (max - min + 1) ) + min;
+	}
+
+</script>
+</body>
+</html>
