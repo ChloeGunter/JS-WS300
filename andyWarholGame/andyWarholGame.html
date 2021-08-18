@@ -33,15 +33,15 @@
             max-width: 600px;
 		}
 
-        /* .art{
+        .container{
             width: 299px;
             height: 299px;
             position: relative;
             background-size: 200%;
             background-repeat: no-repeat;
             float: left;
-            background-color: red;
-        } */
+            background-color: black;
+        }
 
         .art{
             position: relative;
@@ -66,15 +66,16 @@
   			background-color: black;
             color: transparent;
   			border-radius: 45%;
+            transition: 100ms;
 		}
 
 		.hole:hover {
             border-width: 0px;
             border-style: solid;
             background-color: transparent;
-            height: 180px;
-            width: 180px;
-            -webkit-transition: 80ms;
+            height: 200px;
+            width: 200px;
+            transition: 1s;
 		}
 
 	</style>
@@ -112,11 +113,12 @@ const randomPhotoNum = availableWorks.splice(getRandomInt(0, availableWorks.leng
 
 console.log(getRandomInt(0, artWorks-1));
 
-const artImg = `<div class="art">
+const artImg = `<div class="container">
+                <div class="art">
 				<img src="images/${randomPhotoNum}.jpg"/>
-                <div class="hole"></div>
 				</div>
-                `;
+                <div class="hole"></div>
+                </div>`;
 
 $('#game-stage').append(artImg);
 
