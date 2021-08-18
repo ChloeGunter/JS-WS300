@@ -26,56 +26,75 @@
             grid-area: find-what;
         }
 
+        /* #game-stage{
+        grid-area: game-stage;
+	    display: grid;
+	    grid-template-columns: repeat(3, 1fr);
+	    grid-template-rows: repeat(3, 1fr);
+        } */
+
+        /* #game-stage.level2{
+	    grid-template-columns: repeat(4, 1fr);
+	    grid-template-rows: repeat(4, 1fr);
+        } */
+
 		#game-stage {
             grid-area: game-stage;
             display: flex;
             flex-wrap: wrap;
-            max-width: 600px;
+            max-width: 900px;
+            border: 2px solid blue;
 		}
 
         .container{
-            width: 299px;
-            height: 299px;
+            width: 300px;
+            height: 300px;
             position: relative;
-            background-size: 200%;
             background-repeat: no-repeat;
-            float: left;
             background-color: black;
         }
 
         .art{
-            position: relative;
-        }
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            font-weight: 100;
+            font-size: 50px;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 300px;
+            background-color: salmon;
+            border-radius: 50%;
+            }
 
-		img {
-			width: 100%;
-			height: 100%;
-			width: 200px;
-  			border-radius: 50%;
-		}
+        .art img{
+	        border-radius: 50%;
+	        width: 100%;
+        }		
 
 		.hole {
-            padding-top: 3px;
+            z-index: 2;
+            height: 50%;
+            width: 50%;
             position: absolute;
-            top: 0;
-            left: 0;
-  			border-style: solid;
-  			border-width: 100px;
-  			position: absolute;
-  			border-color: black;
-  			background-color: black;
-            color: transparent;
-  			border-radius: 45%;
+            border-style: solid;
+            border-width: 75px;
+            position: absolute;
+            border-color: black;
+            background-color: black;
             transition: 100ms;
+            border-radius: 48%;
 		}
 
 		.hole:hover {
-            border-width: 0px;
             border-style: solid;
-            background-color: transparent;
-            height: 200px;
-            width: 200px;
+            border-width: 15px;
+            height: 277px;
+            width: 277px;
             transition: 1s;
+            background-color: transparent;
 		}
 
 	</style>
