@@ -2,7 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Andy Warhol Game</title>
+    <link rel="icon" href="recources/Ispy-Logo.png" type="image/gif">
 	<style type="text/css">
 
 		html {
@@ -12,14 +14,31 @@
 		body {
 			font-family: Verdana, Arial, Sans;
 			background-color: black;
-			color: black;
+			color: white;
+            margin: 0;
+            border: 5px dashed yellow;
 		}
 
         #game-container {
             display: grid;
-            grid-template-areas: "find-what game-stage";
+            grid-template-areas: "find-what top-bar" "find-what game-stage";
             grid-template-columns: 30% 70%;
             grid-template-rows: auto auto;
+        }
+
+        #top-bar h1, 
+        #top-bar h2 {
+            display: inline-block;
+            line-height: 1em;
+            padding-left: 40px;
+            font-size: 2rem;
+        }
+
+        #top-bar{
+            grid-area: top-bar;
+            background-color: white;
+            color: black;
+            height: 80px;
         }
 
         #find-what {
@@ -28,27 +47,31 @@
             height: 100vh;
         }
 
-        /* #game-stage{
+        .logo{
+            width: 85%;
+            padding: 20px 0 30px;
+        }
+
+        #game-stage{
         grid-area: game-stage;
 	    display: grid;
 	    grid-template-columns: repeat(3, 1fr);
 	    grid-template-rows: repeat(3, 1fr);
-        } */
+        cursor:  url(images/flashlight-white.png), auto;
+        }
 
         /* #game-stage.level2{
 	    grid-template-columns: repeat(4, 1fr);
 	    grid-template-rows: repeat(4, 1fr);
         } */
-
+/* 
 		#game-stage {
             grid-area: game-stage;
             display: flex;
             flex-wrap: wrap;
-            /* max-width: 800px;  */
-            /* border: 2px solid blue; */
             padding: 30px;
-            cursor:  url(images/flashlight-white.png), auto; 
-		}
+            cursor:  url(images/flashlight-white.png), auto;
+		} */
 
         .container{
             width: 250px;
@@ -116,9 +139,14 @@
 	</style>
 </head>
 <body>
+
     <div id="game-container">
         <div id="find-what">
-            <h1>Find the Art Work</h1>
+            <img src="images/ispyLogo.png" alt="i-spy" class="logo">
+        </div>
+        <div id="top-bar">
+            <h1 class="level">Level <span>1</span></h1>
+            <h2 class="time">Timer: <span>00:00</span></h2>
         </div>
         <div id="game-stage"></div>
     </div>
@@ -198,39 +226,17 @@ function getRandomInt(min = 1, max = 100){
 		return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
 
-</script>
-</body>
-</html>
-// <!-- 
-
 //function to have starting with 2 things to find and adding by one for each level2...
 //generate a number to display which two div to display
 //artwork has to be two random peices from game-stage
 
-//add a Level counter
+//add a Level counter and Timer
 //make the art work that was found to add img(checkmark or something) over it
-//if artwork was correctly clicked, make the hole.hover active on the artwork. -->
+//if artwork was correctly clicked, make the hole.hover active on the artwork.
 
 
-// <!-- for(let i = 0; i < findWorks; i += 1){
-//     const randomPhotoNum = availableWorks.splice(getRandomInt(0, availableWorks.length-1), 1);
-
-//     const findRandomWorks = randomPhotoNum;
-
-// //console.log(getRandomInt(0, findWorks-1));
-
-// const artImg = `<div class="container">
-//             <div class="art">
-//             <img src="images/${findRandomWorks}.jpg"/>
-//             </div>
-//             <div class="hole"></div>
-//             </div>`;
-
-// $('#find-what').append(artImg);
+</script>
+</body>
+</html>
 
 
-
-// var images = gameStage(artImg);
-// var image = images[Math.floor(Math.random() * images.length)];
-
-// console.log(image);  -->
