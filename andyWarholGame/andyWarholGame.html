@@ -6,13 +6,13 @@
 	<style type="text/css">
 
 		html {
-			cursor:  url(images/flashlight-white2.png), auto; 
+			cursor:  url(images/flashlight.png), auto; 
 		}
 
 		body {
 			font-family: Verdana, Arial, Sans;
 			background-color: black;
-			color: white;
+			color: black;
 		}
 
         #game-container {
@@ -24,6 +24,8 @@
 
         #find-what {
             grid-area: find-what;
+            background-color: white;
+            height: 100vh;
         }
 
         /* #game-stage{
@@ -42,16 +44,29 @@
             grid-area: game-stage;
             display: flex;
             flex-wrap: wrap;
-            max-width: 900px;
-            border: 2px solid blue;
+            /* max-width: 800px;  */
+            /* border: 2px solid blue; */
+            padding: 30px;
+            cursor:  url(images/flashlight-white.png), auto; 
 		}
 
         .container{
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             position: relative;
             background-repeat: no-repeat;
             background-color: black;
+        }
+
+        #find-what{
+            width: 100%;
+            text-align: center;
+        }
+
+        #find-what .container{
+            margin: 0 auto;
+            background-color: white;
+            margin-bottom: 20px;
         }
 
         .art{
@@ -64,23 +79,23 @@
             color: white;
             text-align: center;
             vertical-align: middle;
-            line-height: 300px;
+            line-height: 250px;
             background-color: salmon;
             border-radius: 50%;
-            }
+        }
 
         .art img{
 	        border-radius: 50%;
 	        width: 100%;
         }		
 
-		.hole {
+		#game-stage .hole {
             z-index: 2;
             height: 50%;
             width: 50%;
             position: absolute;
             border-style: solid;
-            border-width: 75px;
+            border-width: 65px;
             position: absolute;
             border-color: black;
             background-color: black;
@@ -88,11 +103,12 @@
             border-radius: 48%;
 		}
 
-		.hole:hover {
+
+		#game-stage .hole:hover {
             border-style: solid;
             border-width: 15px;
-            height: 277px;
-            width: 277px;
+            height: 227px;
+            width: 227px;
             transition: 1s;
             background-color: transparent;
 		}
@@ -113,41 +129,108 @@
 	'use strict';
 
 	let artWorks = 9;
-	const totalWorks = 30;
+	const totalWorks = 57;
 	let availableWorks = [];
+    let worksInPlay = [];
+    let findWorks = 2;
 
 
-// create an array of avalible photos 1-30
-for(let i = 1; i <= 30; i += 1){
 
-	availableWorks.push(i);
+//gameStage function
 
+function gameStage(){
+    // create an array of avalible photos 1-57
+    for(let i = 1; i <= 57; i += 1){
+
+        availableWorks.push(i);
+
+    }
+
+    // create an array to add 9 divs
+    // randomly choose from the availableWorks array
+    for(let i = 0; i < artWorks; i += 1){
+        worksInPlay.push(availableWorks.splice(getRandomInt(0, availableWorks.length-1), 1)[0]);
+    }
+
+    for(let workNum of worksInPlay){
+        const artImg = `<div class="container">
+                        <div class="art">
+                        <img src="images/${workNum}.jpg"/>
+                        </div>
+                        <div class="hole"></div>
+                        </div>`;
+
+        $('#game-stage').append(artImg);
+    }
+
+}//gameStage function end
+gameStage();
+
+//findingWorks function    
+function findingWorks(){
+    for(let i = 0; i < findWorks; i += 1){
+
+        //const rndImage = Math.floor(Math.random(gameStage()) * 6) + 2;
+        //console.log(rndImage);
+        console.log(worksInPlay);
+        
+        let randomPhotoNum = worksInPlay.splice(getRandomInt(0, worksInPlay.length-1), 1)[0];
+        const findRandomWorks = randomPhotoNum;
+
+        const artImg = `<div class="container">
+                    <div class="art">
+                    <img src="images/${findRandomWorks}.jpg"/>
+                    </div>
+                    <div class="hole"></div>
+                    </div>`;
+
+        console.log(findRandomWorks);
+        $('#find-what').append(artImg);
+    }
 }
 
-// create an array to add 9 divs
-// randomly choose from the availableWorks array
-for(let i = 0; i < artWorks; i += 1){
+findingWorks();
 
-const randomPhotoNum = availableWorks.splice(getRandomInt(0, availableWorks.length-1), 1);
 
-console.log(getRandomInt(0, artWorks-1));
-
-const artImg = `<div class="container">
-                <div class="art">
-				<img src="images/${randomPhotoNum}.jpg"/>
-				</div>
-                <div class="hole"></div>
-                </div>`;
-
-$('#game-stage').append(artImg);
-
-}
 
 // random integer function
 function getRandomInt(min = 1, max = 100){
 		return Math.floor( Math.random() * (max - min + 1) ) + min;
-	}
+}
 
 </script>
 </body>
 </html>
+// <!-- 
+
+//function to have starting with 2 things to find and adding by one for each level2...
+//generate a number to display which two div to display
+//artwork has to be two random peices from game-stage
+
+//add a Level counter
+//make the art work that was found to add img(checkmark or something) over it
+//if artwork was correctly clicked, make the hole.hover active on the artwork. -->
+
+
+// <!-- for(let i = 0; i < findWorks; i += 1){
+//     const randomPhotoNum = availableWorks.splice(getRandomInt(0, availableWorks.length-1), 1);
+
+//     const findRandomWorks = randomPhotoNum;
+
+// //console.log(getRandomInt(0, findWorks-1));
+
+// const artImg = `<div class="container">
+//             <div class="art">
+//             <img src="images/${findRandomWorks}.jpg"/>
+//             </div>
+//             <div class="hole"></div>
+//             </div>`;
+
+// $('#find-what').append(artImg);
+
+
+
+// var images = gameStage(artImg);
+// var image = images[Math.floor(Math.random() * images.length)];
+
+// console.log(image);  -->
