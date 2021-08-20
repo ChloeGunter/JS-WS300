@@ -136,32 +136,80 @@
             background-color: transparent;
 		}
 
+        .game-intro{
+            position: relative;
+        }
+
+        .start-level{
+            background-color: rgb(28, 84, 4);
+            height: 50px;
+            width: 200px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+        }
+
 	</style>
 </head>
 <body>
+
+    <!-- This game-intro will have a background image to start game and will represent the very begging of the game when it is first loaded. -->
+
+    <div class="game-intro"></div>
+
+    <div class="start-level button">Start Level <span class="level-number">0</span></div>
 
     <div id="game-container">
         <div id="find-what">
             <img src="images/ispyLogo.png" alt="i-spy" class="logo">
         </div>
         <div id="top-bar">
-            <h1 class="level">Level <span>1</span></h1>
-            <h2 class="time">Timer: <span>00:00</span></h2>
+            <h1>Level <span class="level">0</span></h1>
+            <h2>Timer: <span class="time">0</span></h2>
         </div>
         <div id="game-stage"></div>
     </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
 	'use strict';
 
-	let artWorks = 9;
-	const totalWorks = 57;
-	let availableWorks = [];
-    let worksInPlay = [];
-    let findWorks = 2;
+    const totalWorks = 57;
+	let artWorks = 9,
+        availableWorks = [],
+        worksInPlay = [],
+        findWorks = 2,
+        level = 0,
+        timer = 0,
+        seconds = 15,
+        gameRunning = false;
+        
 
+    let startLevel = document.querySelector('.start-level'),
+        levelDisplay = document.querySelector('.level'),
+        timeDisplay = document.querySelector('.time');
+
+function startNextLevel(){
+    //alert('clicked');
+
+    $('.start-level').hide();
+
+    if(gameRunning == false){
+        timer = setInterval(setTime, 1000);
+        gameRunning = true;
+    }
+
+    level++;
+    levelDisplay.textContent = level;
+
+    //switch or if statements for each level.
+    // switch(level){
+    //     case 
+    // }
+
+}
 
 
 //gameStage function
@@ -169,9 +217,7 @@
 function gameStage(){
     // create an array of avalible photos 1-57
     for(let i = 1; i <= 57; i += 1){
-
         availableWorks.push(i);
-
     }
 
     // create an array to add 9 divs
@@ -190,7 +236,6 @@ function gameStage(){
 
         $('#game-stage').append(artImg);
     }
-
 }//gameStage function end
 gameStage();
 
@@ -220,11 +265,29 @@ function findingWorks(){
 findingWorks();
 
 
-
 // random integer function
 function getRandomInt(min = 1, max = 100){
 		return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
+
+
+function setTime(){
+        seconds--;
+        timeDisplay.textContent = seconds;
+
+        if(seconds == 0){
+            clearInterval(timer);
+            timeDisplay.textContent = '0';
+            //remove click from game-stage
+            startLevel.removeEventListener('click', startNextLevel);
+            //start again? link back to beginning...
+            alert('Game Over');
+        }
+}
+
+startLevel.addEventListener('click', startNextLevel);
+
+
 
 //function to have starting with 2 things to find and adding by one for each level2...
 //generate a number to display which two div to display
