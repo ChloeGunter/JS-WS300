@@ -19,6 +19,14 @@
             border: 5px dashed yellow;
 		}
 
+        #game-intro{
+            z-index: 3;
+            position: absolute;
+            background-image: url(images/start-screen.jpg);
+            width: 100%;
+            height: 100%;
+        }
+
         #game-container {
             display: grid;
             grid-template-areas: "find-what top-bar" "find-what game-stage";
@@ -127,7 +135,7 @@
 		}
 
 
-		#game-stage .hole:hover {
+		#game-stage .hole:hover, .active {
             border-style: solid;
             border-width: 15px;
             height: 227px;
@@ -155,9 +163,11 @@
 
     <!-- This game-intro will have a background image to start game and will represent the very begging of the game when it is first loaded. -->
 
-    <div class="game-intro"></div>
+    <div id="game-intro">
+        <div class="start-level button">Start Level <span class="level-number">0</span></div>
+    </div>
 
-    <div class="start-level button">Start Level <span class="level-number">0</span></div>
+    
 
     <div id="game-container">
         <div id="find-what">
@@ -184,7 +194,8 @@
         level = 0,
         timer = 0,
         seconds = 15,
-        gameRunning = false;
+        gameRunning = false,
+        correctWork = [];
         
 
     let startLevel = document.querySelector('.start-level'),
@@ -193,7 +204,7 @@
 
 function startNextLevel(){
     //alert('clicked');
-
+    $('#game-intro').css('display', 'none');
     $('.start-level').hide();
 
     if(gameRunning == false){
@@ -210,7 +221,6 @@ function startNextLevel(){
     // }
 
 }
-
 
 //gameStage function
 
@@ -236,6 +246,34 @@ function gameStage(){
 
         $('#game-stage').append(artImg);
     }
+
+    document.addEventListener('click', function(e){
+        if(correctWork.length == 0) {
+            return;
+        }
+        if(e.target.tagName === "DIV" && e.target.classList.contains('hole')){
+            //console.log('clicked');
+            //console.log(e.target.previousElementSibling.firstElementChild);
+
+            let src = e.target.previousElementSibling.firstElementChild.getAttribute("src");
+
+            for(let i = 0; i < correctWork.length; i++) {
+                if(`images/${correctWork[i]}.jpg` == src) {
+                    //console.log("HOORAY");
+                    // $('.hole').addClass('active');
+                    e.target.classList.remove('hole');
+                    correctWork.splice(i, 1);
+                    break;
+                }
+            }
+            if(correctWork.length == 0) {
+                clearInterval(timer);
+                alert("You WON!");
+            }
+        }
+        // if(e.tag == ÷÷)
+    })
+
 }//gameStage function end
 gameStage();
 
@@ -250,6 +288,8 @@ function findingWorks(){
         let randomPhotoNum = worksInPlay.splice(getRandomInt(0, worksInPlay.length-1), 1)[0];
         const findRandomWorks = randomPhotoNum;
 
+        correctWork.push(findRandomWorks);
+
         const artImg = `<div class="container">
                     <div class="art">
                     <img src="images/${findRandomWorks}.jpg"/>
@@ -261,7 +301,6 @@ function findingWorks(){
         $('#find-what').append(artImg);
     }
 }
-
 findingWorks();
 
 
@@ -295,7 +334,7 @@ startLevel.addEventListener('click', startNextLevel);
 
 //add a Level counter and Timer
 //make the art work that was found to add img(checkmark or something) over it
-//if artwork was correctly clicked, make the hole.hover active on the artwork.
+//if artwork was correctly clicked, make the hole.  active on the artwork.
 
 
 </script>
