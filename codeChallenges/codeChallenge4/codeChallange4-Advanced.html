@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Code Challenge 4 - Advanced</title>
+  <style>
+  body {
+    background-color: rgb(212, 212, 255);
+  }
+  div {
+    color: white;
+    background-color: purple;
+    height: 15px;
+    padding: 10px;
+  }
+  #div2{
+    background-color: rgb(213, 171, 252);
+  }
+  </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+</head>
+<body>
+ 
+<div id="div1"></div>
+<div id="div2"></div>
+ 
+<script>
+$(window).on('mousemove', function(e) {
+  $('#div1').text('X:' +e.pageX+ ', Y: ' +e.pageY);
+  $('#div1').css({'width': +e.pageX+ 'px'});
+
+});
+$(window).on('click', function(e) {
+  //$('#div2').text('X:' +e.pageX);
+  $('#div2').css({'width': +e.pageX+ 'px'});
+});
+</script>
+</body>
+</html>
