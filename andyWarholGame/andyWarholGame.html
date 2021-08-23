@@ -7,6 +7,8 @@
     <link rel="icon" href="recources/Ispy-Logo.png" type="image/gif">
 	<style type="text/css">
 
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 		html {
 			cursor:  url(images/flashlight.png), auto; 
 		}
@@ -20,11 +22,40 @@
 		}
 
         #game-intro{
+            cursor:  url(images/flashlight-white.png), auto;
             z-index: 3;
             position: absolute;
+            background-color: black;
             background-image: url(images/start-screen.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0 auto;
+            text-align: center;
             width: 100%;
             height: 100%;
+        }
+
+        .start-level, .btn2{
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(-90deg, aqua, blue);
+            background-size: 600%;
+            height: 80px;
+            width: 250px;
+            line-height: 5rem;
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            border-radius: 50px;
+        }
+
+        .btn2{
+            height: 50px;
+            width: 260px;
+            margin-top: 25px;
+            z-index: -1;
+            filter: blur(30px);
+            opacity: 1;
         }
 
         #game-container {
@@ -68,10 +99,53 @@
         cursor:  url(images/flashlight-white.png), auto;
         }
 
-        /* #game-stage.level2{
+        #game-stage.level2{
 	    grid-template-columns: repeat(4, 1fr);
 	    grid-template-rows: repeat(4, 1fr);
-        } */
+        }
+
+        #game-stage.level2 .container {
+            width: 190px;
+            height: 190px;
+        }
+
+        #game-stage.level2 .art {
+            width: 90%;
+            height: 90%;
+        }
+
+        #game-stage.level2 .hole {
+            height: 25%;
+            width: 25%;
+        }
+
+        #game-stage.level2 .hole:hover, 
+        #game-stage.level3 .hole:hover,
+        .active{
+            border-width: 5px;
+            height: 85%;
+            width: 85%;
+        }
+
+        #game-stage.level3{
+	    grid-template-columns: repeat(5, 1fr);
+	    grid-template-rows: repeat(5, 1fr);
+        }
+
+        #game-stage.level3 .container {
+            width: 180px;
+            height: 180px;
+        }
+
+        #game-stage.level3 .art {
+            width: 90%;
+            height: 90%;
+        }
+
+        #game-stage.level3 .hole {
+            height: 20%;
+            width: 20%;
+        }
 /* 
 		#game-stage {
             grid-area: game-stage;
@@ -144,18 +218,6 @@
             background-color: transparent;
 		}
 
-        .game-intro{
-            position: relative;
-        }
-
-        .start-level{
-            background-color: rgb(28, 84, 4);
-            height: 50px;
-            width: 200px;
-            position: absolute;
-            top: 0;
-            left: 50%;
-        }
 
 	</style>
 </head>
@@ -164,9 +226,9 @@
     <!-- This game-intro will have a background image to start game and will represent the very begging of the game when it is first loaded. -->
 
     <div id="game-intro">
-        <div class="start-level button">Start Level <span class="level-number">0</span></div>
+        <div class="start-level button">Start Level <span class="level-number"></span></div>
+        <div class="btn2"></div>
     </div>
-
     
 
     <div id="game-container">
@@ -174,7 +236,7 @@
             <img src="images/ispyLogo.png" alt="i-spy" class="logo">
         </div>
         <div id="top-bar">
-            <h1>Level <span class="level">0</span></h1>
+            <h1>Level <span class="level"></span></h1>
             <h2>Timer: <span class="time">0</span></h2>
         </div>
         <div id="game-stage"></div>
@@ -193,7 +255,7 @@
         findWorks = 2,
         level = 0,
         timer = 0,
-        seconds = 15,
+        seconds = 0,
         gameRunning = false,
         correctWork = [];
         
@@ -216,9 +278,23 @@ function startNextLevel(){
     levelDisplay.textContent = level;
 
     //switch or if statements for each level.
-    // switch(level){
-    //     case 
-    // }
+
+    if(level == 1){
+        seconds = 15;
+        artWorks = 9;
+    }
+
+    if(level == 2){
+        $('#game-stage').addClass('level2');
+        seconds = 20;
+        artWorks = 18;
+    }
+
+    if(level == 3){
+        $('#game-stage').removeClass('level2').addClass('level3');
+        seconds = 35;
+        artWorks = 25;
+    }
 
 }
 
@@ -268,10 +344,9 @@ function gameStage(){
             }
             if(correctWork.length == 0) {
                 clearInterval(timer);
-                alert("You WON!");
+                //pop up startLevel button, change text to next level
             }
         }
-        // if(e.tag == ÷÷)
     })
 
 }//gameStage function end
