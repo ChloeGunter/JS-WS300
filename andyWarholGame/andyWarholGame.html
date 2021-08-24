@@ -226,7 +226,7 @@
     <!-- This game-intro will have a background image to start game and will represent the very begging of the game when it is first loaded. -->
 
     <div id="game-intro">
-        <div class="start-level button">Start Level <span class="level-number"></span></div>
+        <div class="start-level button">Start Game <span class="level-number"></span></div>
         <div class="btn2"></div>
     </div>
     
@@ -248,14 +248,15 @@
 <script type="text/javascript">
 	'use strict';
 
-    const totalWorks = 57;
-	let artWorks = 9,
-        availableWorks = [],
+    const totalWorks = 57,
+        artWorks = [9, 18, 25],
+        findWorks = [2, 3, 4],
+        seconds = [15, 20, 35];
+
+	let availableWorks = [],
         worksInPlay = [],
-        findWorks = 2,
         level = 0,
         timer = 0,
-        seconds = 0,
         gameRunning = false,
         correctWork = [];
         
@@ -266,6 +267,7 @@
 
 function startNextLevel(){
     //alert('clicked');
+    if
     $('#game-intro').css('display', 'none');
     $('.start-level').hide();
 
@@ -280,23 +282,19 @@ function startNextLevel(){
     //switch or if statements for each level.
 
     if(level == 1){
-        seconds = 15;
-        artWorks = 9;
     }
 
     if(level == 2){
         $('#game-stage').addClass('level2');
-        seconds = 20;
-        artWorks = 18;
     }
 
     if(level == 3){
         $('#game-stage').removeClass('level2').addClass('level3');
-        seconds = 35;
-        artWorks = 25;
     }
-
+    gameStage();
+    findingWorks();
 }
+startLevel.addEventListener('click', startNextLevel);
 
 //gameStage function
 
@@ -308,7 +306,7 @@ function gameStage(){
 
     // create an array to add 9 divs
     // randomly choose from the availableWorks array
-    for(let i = 0; i < artWorks; i += 1){
+    for(let i = 0; i < artWorks[level - 1]; i += 1){
         worksInPlay.push(availableWorks.splice(getRandomInt(0, availableWorks.length-1), 1)[0]);
     }
 
@@ -345,16 +343,19 @@ function gameStage(){
             if(correctWork.length == 0) {
                 clearInterval(timer);
                 //pop up startLevel button, change text to next level
+                //startNextLevel();
+                $('.start-level').show();
             }
         }
     })
 
 }//gameStage function end
-gameStage();
+// gameStage();
 
 //findingWorks function    
 function findingWorks(){
-    for(let i = 0; i < findWorks; i += 1){
+
+    for(let i = 0; i < findWorks[level -1]; i += 1){
 
         //const rndImage = Math.floor(Math.random(gameStage()) * 6) + 2;
         //console.log(rndImage);
@@ -376,20 +377,14 @@ function findingWorks(){
         $('#find-what').append(artImg);
     }
 }
-findingWorks();
-
-
-// random integer function
-function getRandomInt(min = 1, max = 100){
-		return Math.floor( Math.random() * (max - min + 1) ) + min;
-}
+// findingWorks();
 
 
 function setTime(){
-        seconds--;
-        timeDisplay.textContent = seconds;
+        seconds[level - 1]--;
+        timeDisplay.textContent = seconds[level - 1];
 
-        if(seconds == 0){
+        if(seconds[level - 1] == 0){
             clearInterval(timer);
             timeDisplay.textContent = '0';
             //remove click from game-stage
@@ -399,7 +394,25 @@ function setTime(){
         }
 }
 
-startLevel.addEventListener('click', startNextLevel);
+// random integer function
+function getRandomInt(min = 1, max = 100){
+		return Math.floor( Math.random() * (max - min + 1) ) + min;
+}
+
+function cleanUp(){
+    //wipe out all elements and variables that have been set.
+    //artWorks, seconds, findWorks
+    const images = document.querySelectorAll('.container');
+
+    availableWorks = [];
+    worksInPlay = [];
+    correctWork = [];
+
+
+    for(let i = 0; i < images.length; i += 1){
+        images[i].remove();
+    }
+}
 
 
 
