@@ -226,7 +226,7 @@
     <!-- This game-intro will have a background image to start game and will represent the very begging of the game when it is first loaded. -->
 
     <div id="game-intro">
-        <div class="start-level button">Start Game <span class="level-number"></span></div>
+        <div class="start-level button">Start Game</div>
         <div class="btn2"></div>
     </div>
     
@@ -267,7 +267,6 @@
 
 function startNextLevel(){
     //alert('clicked');
-    if
     $('#game-intro').css('display', 'none');
     $('.start-level').hide();
 
@@ -277,20 +276,41 @@ function startNextLevel(){
     }
 
     level++;
-    levelDisplay.textContent = level;
+
 
     //switch or if statements for each level.
 
-    if(level == 1){
+    if(level >= 2) {
+        cleanUp();
+        console.log("sda");
     }
 
-    if(level == 2){
-        $('#game-stage').addClass('level2');
+    switch(level) {
+        case 1:
+            break;
+        case 2:
+            $('#game-stage').addClass('level2');
+            break;
+        case 3:
+            $('#game-stage').removeClass('level2').addClass('level3');
+            break;
+        default:
+            level = 1;
+            break;
     }
+        
+    levelDisplay.textContent = level;
+    // if(level == 1){
+    // }
 
-    if(level == 3){
-        $('#game-stage').removeClass('level2').addClass('level3');
-    }
+    // if(level == 2){
+    //     $('#game-stage').addClass('level2');
+
+    // }
+
+    // if(level == 3){
+    //     $('#game-stage').removeClass('level2').addClass('level3');
+    // } 
     gameStage();
     findingWorks();
 }
@@ -342,9 +362,17 @@ function gameStage(){
             }
             if(correctWork.length == 0) {
                 clearInterval(timer);
+                gameRunning = false;
                 //pop up startLevel button, change text to next level
                 //startNextLevel();
                 $('.start-level').show();
+                $('#game-intro').css('display', 'block');
+
+                if(level == 1 || level == 2){
+                    startLevel.textContent = 'Start Level ' + (level + 1);
+                }else if(level == 3){
+                    startLevel.textContent = 'Start Over';
+                }
             }
         }
     })
@@ -382,6 +410,7 @@ function findingWorks(){
 
 function setTime(){
         seconds[level - 1]--;
+        console.log("dsa");
         timeDisplay.textContent = seconds[level - 1];
 
         if(seconds[level - 1] == 0){
