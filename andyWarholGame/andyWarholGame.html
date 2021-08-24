@@ -21,6 +21,17 @@
             border: 5px dashed yellow;
 		}
 
+        .sound-control{
+		    color: white;
+            /* display: inline-block; */
+            padding: .5em;
+		    background-color: blue;
+		    float: right;
+		    margin: .75em;
+		    border-radius: 10px;
+		    cursor: pointer;
+        }
+
         #game-intro{
             cursor:  url(images/flashlight-white.png), auto;
             z-index: 3;
@@ -252,6 +263,7 @@
         <div id="top-bar">
             <h1>Level <span class="level"></span></h1>
             <h2>Timer: <span class="time">0</span></h2>
+            <div class="sound-control">Sound <span>On</span></div>
         </div>
         <div id="game-stage"></div>
     </div>
@@ -272,13 +284,8 @@
         level = 0,
         timer = 0,
         gameRunning = false,
-        correctWork = [];
-        //music = new Audio('sounds/'),
-        //pop = new Audio('sounds/')
-        
-
-        //music.volume = 0.2;
-        //pop.volume = 1;
+        correctWork = [],
+        sound = true;
         
 
     let startLevel = document.querySelector('.start-level'),
@@ -289,6 +296,7 @@ function startNextLevel(){
     //alert('clicked');
     $('#game-intro').css('display', 'none');
     $('.start-level').hide();
+    music.play();
 
     if(gameRunning == false){
         timer = setInterval(setTime, 1000);
@@ -378,7 +386,7 @@ function gameStage(){
                     // $('.hole').addClass('active');
                     e.target.classList.remove('hole');
                     correctWork.splice(i, 1);
-                    //playSound(pop, 1);
+                    playSound(pop, 1);
                     break;
                 }
             }
@@ -442,13 +450,44 @@ function setTime(){
             //startLevel.removeEventListener('click', startNextLevel);
             //start again? link back to beginning...
 
-            $('.start-level').show();
-            $('#game-intro').css('display', 'block');
-            startLevel.textContent = 'Try Again';
-            level = 0;
-            $('#game-stage').removeClass('level2', 'level3');
+            // $('.start-level').show();
+            // $('#game-intro').css('display', 'block');
+            // startLevel.textContent = 'Try Again';
+            // level = 0;
+            // $('#game-stage').removeClass('level2', 'level3');
         }
 }
+
+
+    var music = new Audio('sounds/background-music.mp3');
+    var pop = new Audio('sounds/pop.mp3');
+
+        music.volume = 0.2;
+        pop.volume = 1;
+        
+
+function playSound(track, vol){
+	if(sound){
+	//if sound is currently true
+	let tempSound = track.cloneNode(); //duplicates any object (html objects)
+			tempSound.volume = vol;
+			tempSound.play();		
+		}
+}
+
+$('.sound-control').click( function(){
+    console.log('sound clicked');
+	if(sound){
+		sound = false;
+        $(this).find('span').text('Off');
+        music.pause();
+	}else{
+		$(this).find('span').text('On');
+		sound = true;
+        music.play();
+        //playSound(music, 0.2);
+	}
+})
 
 // random integer function
 function getRandomInt(min = 1, max = 100){
