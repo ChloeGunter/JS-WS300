@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Code Challenge 5 - Basic</title>
+	<style type="text/css">
+		body{
+			font-family: Verdana, Arial, Sans;
+			font-size: 2rem;
+			text-align: center;
+			color: mediumslateblue;
+		}
+		.clock div{
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+    <div class="clock">
+		<div id="hours">00</div>
+		<div class="colon">:</div>
+		<div id="minutes">00</div>
+		<div class="colon">:</div>
+		<div id="seconds">00</div>
+		<div id="meridiem"></div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	'use strict';
+	let today = new Date();
+
+	function clock(){
+		let today = new Date();
+
+		//today.setHours(0);
+
+		let currentHour = today.getHours(),
+			currentMinutes = today.getMinutes(),
+			currentSeconds = today.getSeconds(),
+			ampm = '';
+
+			ampm = currentHour > 11 ? 'PM' : 'AM'
+
+		
+		if(currentHour < 12){
+			ampm = 'AM';
+		}else{
+			currentHour -= 12;
+			ampm = 'PM';
+		}
+
+		if(currentHour == 0){
+			currentHour = 12;
+		}
+
+		if(currentHour < 10){
+			currentHour = '0'+currentHour;
+		}
+
+		if(currentMinutes < 10){
+			currentMinutes = '0'+currentMinutes;
+		}
+
+		if(currentSeconds < 10){
+			currentSeconds = '0'+currentSeconds;
+		}
+
+		$('#hours').text(currentHour);
+		$('#minutes').text(currentMinutes);
+		$('#seconds').text(currentSeconds);
+		$('#meridiem').text(ampm);
+
+		window.requestAnimationFrame(clock);
+	}
+
+	clock();
+	//setInterval(clock, 1000)
+	//this will call it to run every seconds.
+
+</script>
+</body>
+</html>
