@@ -25,7 +25,7 @@
 		    color: white;
             /* display: inline-block; */
             padding: .5em;
-		    background-color: blue;
+		    background-color: #86c1c3;
 		    float: right;
 		    margin: .75em;
 		    border-radius: 10px;
@@ -48,21 +48,21 @@
 
         .start-level, .btn2{
             font-family: 'Bebas Neue', cursive;
-            font-size: 2.5rem;
-            background: linear-gradient(-90deg, aqua, blue);
+            font-size: 3rem;
+            background: linear-gradient(-90deg, aqua, #86c1c3);
             background-size: 600%;
-            height: 80px;
-            width: 250px;
-            line-height: 5rem;
+            height: 100px;
+            width: 300px;
+            line-height: 6.25rem;
             position: absolute;
-            top: 50%;
-            left: 45%;
+            top: 600px;
+            left: 80px;
             border-radius: 50px;
         }
 
         .btn2{
-            height: 50px;
-            width: 260px;
+            height: 80px;
+            width: 280px;
             margin-top: 25px;
             z-index: -1;
             filter: blur(30px);
@@ -93,14 +93,14 @@
 
         #find-what {
             grid-area: find-what;
-            background-color: white;
+            background-color: black;
             min-height: 880px;
             width: 100%;
             text-align: center;
         }
 
         .logo{
-            width: 85%;
+            width: 95%;
             padding: 15px 0;
         }
 
@@ -114,11 +114,12 @@
 
         #find-what .container{
             margin: 0 auto;
-            background-color: white;
+            background-color: black;
             margin-bottom: 20px;
         }
 
         #game-stage{
+            border-left: 6px solid white;
         grid-area: game-stage;
 	    display: grid;
 	    grid-template-columns: repeat(3, 1fr);
@@ -190,14 +191,6 @@
             height: 150px;
             margin-bottom: 5px;
         }
-/* 
-		#game-stage {
-            grid-area: game-stage;
-            display: flex;
-            flex-wrap: wrap;
-            padding: 30px;
-            cursor:  url(images/flashlight-white.png), auto;
-		} */
 
         .art{
             z-index: 1;
@@ -210,7 +203,6 @@
             text-align: center;
             vertical-align: middle;
             line-height: 250px;
-            background-color: salmon;
             border-radius: 50%;
         }
 
@@ -258,7 +250,7 @@
 
     <div id="game-container">
         <div id="find-what">
-            <img src="images/ispyLogo.png" alt="i-spy" class="logo">
+            <img src="images/ispyLogo2.png" alt="i-spy" class="logo">
         </div>
         <div id="top-bar">
             <h1>Level <span class="level"></span></h1>
@@ -273,6 +265,8 @@
 
 <script type="text/javascript">
 	'use strict';
+
+    (function(){
 
     const totalWorks = 57,
         artWorks = [9, 16, 25],
@@ -308,7 +302,7 @@ function startNextLevel(){
 
     level++;
 
-    currentSeconds = seconds[level - 1];
+    console.log("level: " + level);
 
     //switch or if statements for each level.
 
@@ -331,22 +325,13 @@ function startNextLevel(){
             level = 1;
             break;
     }
+    currentSeconds = seconds[level - 1];
         
     levelDisplay.textContent = level;
-    // if(level == 1){
-    // }
-
-    // if(level == 2){
-    //     $('#game-stage').addClass('level2');
-
-    // }
-
-    // if(level == 3){
-    //     $('#game-stage').removeClass('level2').addClass('level3');
-    // } 
     gameStage();
     findingWorks();
 }
+
 startLevel.addEventListener('click', startNextLevel);
 
 //gameStage function
@@ -398,13 +383,13 @@ function gameStage(){
                 clearInterval(timer);
                 gameRunning = false;
                 //pop up startLevel button, change text to next level
-                //startNextLevel();
                 $('.start-level').show();
                 $('#game-intro').css('display', 'block');
 
                 if(level == 1 || level == 2){
                     startLevel.textContent = 'Start Level ' + (level + 1);
                 }else if(level == 3){
+                    level = 0;
                     startLevel.textContent = 'Start Over';
                 }
             }
@@ -462,8 +447,7 @@ function setTime(){
             startLevel.textContent = 'Try Again';
             level = 0;
             cleanUp();
-            startNextLevel();
-            $('#game-stage').removeClass('level2', 'level3');
+            $('#game-stage, #find-what').removeClass('level2, level3');
         }
 }
 
@@ -518,7 +502,7 @@ function cleanUp(){
     }
 }
 
-
+})()// end of IIFE
 
 //function to have starting with 2 things to find and adding by one for each level2...
 //generate a number to display which two div to display
